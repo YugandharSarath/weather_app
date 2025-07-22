@@ -1,7 +1,7 @@
 
 ---
 
-## 🌦️ Weather App – Full Overview
+## 🌦️ Weather App 
 
 ### 🧠 Problem Statement
 
