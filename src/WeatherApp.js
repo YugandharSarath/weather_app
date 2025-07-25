@@ -1,18 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-type WeatherData = {
-  temperature: number;
-  humidity: number;
-  description: string;
-  city: string;
-};
-
-const WeatherApp: React.FC = () => {
-  const [weather, setWeather] = useState<WeatherData | null>(null);
+const WeatherApp = () => {
+  const [weather, setWeather] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string>("");
+  const [error, setError] = useState("");
 
-  const fetchWeather = async (lat: number, lon: number) => {
+  const fetchWeather = async (lat, lon) => {
     try {
       const API_KEY = "439d4b804bc8187953eb36d2a8c26a02";
       const response = await fetch(
@@ -24,7 +17,7 @@ const WeatherApp: React.FC = () => {
         throw new Error(data.message);
       }
 
-      const weatherData: WeatherData = {
+      const weatherData = {
         temperature: data.main.temp,
         humidity: data.main.humidity,
         description: data.weather[0].description,
@@ -32,7 +25,7 @@ const WeatherApp: React.FC = () => {
       };
 
       setWeather(weatherData);
-    } catch (err: any) {
+    } catch (err) {
       setError(err.message || "Failed to fetch weather data");
     } finally {
       setLoading(false);
@@ -51,7 +44,7 @@ const WeatherApp: React.FC = () => {
         const { latitude, longitude } = position.coords;
         fetchWeather(latitude, longitude);
       },
-      (err) => {
+      () => {
         setError("Permission denied or unable to get location.");
         setLoading(false);
       }

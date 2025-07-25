@@ -7,7 +7,7 @@ import WeatherApp from "./WeatherApp";
 const mockGeolocation = {
   getCurrentPosition: jest.fn(),
 };
-// @ts-ignore
+
 global.navigator.geolocation = mockGeolocation;
 
 // Mock fetch
@@ -66,7 +66,6 @@ describe("WeatherApp", () => {
 
   // GEO-04: Device does not support geolocation
   it("shows error if geolocation is not supported", async () => {
-    // @ts-ignore
     delete global.navigator.geolocation;
     render(<WeatherApp />);
     await waitFor(() => {
@@ -74,12 +73,8 @@ describe("WeatherApp", () => {
         screen.getByText("Geolocation is not supported by your browser.")
       ).toBeInTheDocument();
     });
-    // Restore for other tests
-    // @ts-ignore
     global.navigator.geolocation = mockGeolocation;
   });
-
-  // API-01: Valid API key provided (already covered above)
 
   // API-02: Invalid API key
   it("shows error if API key is invalid", async () => {
@@ -121,13 +116,9 @@ describe("WeatherApp", () => {
     });
   });
 
-  // UI-01: Weather data loaded (already covered above)
-
-  // UI-02: Error occurred (already covered above)
-
   // UI-03: Loading state
   it("shows loading state initially", () => {
     render(<WeatherApp />);
     expect(screen.getByText("Loading...")).toBeInTheDocument();
   });
-}); 
+});
